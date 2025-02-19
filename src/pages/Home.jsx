@@ -43,25 +43,29 @@ const Home = () => {
   async function summarizeText(text) {
     if (!("ai" in self) || !("summarizer" in self.ai)) {
       console.error("Summarizer API not supported.");
-      return;
+      return null;
     }
-
+  
     try {
       setLoading(true);
+      console.log("Summarizing text:", text);
       const summarizer = await self.ai.summarizer.create({
-        type: "key-points",
+        task: "summarization", 
         format: "plain-text",
         length: "medium",
       });
-      return await summarizer.summarize(text);
+  
+      const result = await summarizer.summarize(text);
+      console.log("Summary result:", result);
+      return result ? result.summary || result : "Summarization failed";
     } catch (error) {
       console.error("Summarization error:", error);
-      return null;
+      return "Error in summarization";
     } finally {
       setLoading(false);
     }
   }
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputText.trim()) return;
@@ -74,13 +78,18 @@ const Home = () => {
 
   const handleSummarize = async (index) => {
     const message = messages[index];
+    if (!message.text) return;
+  
     const summary = await summarizeText(message.text);
     if (summary) {
-      const updatedMessages = [...messages];
-      updatedMessages[index].summary = summary;
-      setMessages(updatedMessages);
+      setMessages((prevMessages) => {
+        const updatedMessages = [...prevMessages];
+        updatedMessages[index] = { ...updatedMessages[index], summary };
+        return updatedMessages;
+      });
     }
-  };
+  };  
+  
 
   const handleTranslate = async (index) => {
     const message = messages[index];
@@ -118,7 +127,7 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="w-sm flex xl:w-full items-center justify-center mt-4">
+      <form onSubmit={handleSubmit} className="w-sm flex xl:w-full items-center justify-center mt-4 pb-10">
         <textarea
           className="w-xs bg-[#13272a] p-6 xl:w-5xl rounded-xl text-white focus:outline-none border-2 border-[#1c393e]"
           placeholder="Type something..."
