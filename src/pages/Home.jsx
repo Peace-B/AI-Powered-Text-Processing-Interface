@@ -52,7 +52,7 @@ const Home = () => {
       const summarizer = await self.ai.summarizer.create({
         task: "summarization", 
         format: "plain-text",
-        length: "medium",
+        length: "short",
       });
   
       const result = await summarizer.summarize(text);
@@ -103,7 +103,10 @@ const Home = () => {
 
   return (
     <div className="w-full bg-[#13272a] text-white xl:w-full h-screen flex flex-col justify-between xl:p-4">
-      <div className="w-sm md:w-3/4 lg:w-2/3 xl:w-6xl bg-[#13272a] px-10 h-[640px] rounded-2xl flex flex-col items-center m-auto xl:py-4 overflow-y-auto">
+      <div className="mt-4 mb-5 xl:mt-0">
+      <h1 className="text-xl xl:text-2xl text-[#34676f] font-[Jejumyeongjo]">ConciseVerbify.</h1>
+      </div>
+      <div className="w-full md:w-3/4 lg:w-2/3 xl:w-6xl bg-[#13272a] px-10 h-[640px] rounded-2xl flex flex-col items-center m-auto xl:py-4 overflow-y-auto">
         {messages.map((msg, index) => (
           <div key={index} className="w-sm mb-4 p-4 bg-[#1c393e] rounded-xl xl:w-full">
             <p className="text-lg">{msg.text}</p>
@@ -127,9 +130,9 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="w-sm flex xl:w-full items-center justify-center mt-4 pb-10">
+      <form onSubmit={handleSubmit} className="w-sm flex xl:w-full items-center justify-center mt-4 pb-10 m-auto">
         <textarea
-          className="w-xs bg-[#13272a] p-6 xl:w-5xl rounded-xl text-white focus:outline-none border-2 border-[#1c393e]"
+          className="w-full bg-[#13272a] p-6 xl:w-5xl rounded-xl text-white focus:outline-none border-2 border-[#1c393e]"
           placeholder="Type something..."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
