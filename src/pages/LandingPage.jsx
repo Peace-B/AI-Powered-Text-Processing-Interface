@@ -10,7 +10,7 @@ const LandingPage = () => {
           Welcome to ConciseVerbify
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mt-4 animate-fade-in delay-200">
-          Experience AI-powered text language detection summarization & translation effortlessly.
+          Experience AI-powered text language detection, summarization & translation effortlessly.
         </p>
        <Link to="/home">
         <button className="mt-6 px-6 py-3 bg-[#1c393e] rounded-full text-lg font-semibold shadow-lg hover:bg-[#34676f] transition duration-300 animate-fade-in delay-300">
